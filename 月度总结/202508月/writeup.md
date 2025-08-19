@@ -10,7 +10,7 @@
     - [6.\[HCTF 2018\]admin1](#6hctf-2018admin1)
   - [PWN](#pwn)
     - [1.ciscn\_2019\_n\_11（小数用地址表示）](#1ciscn_2019_n_11小数用地址表示)
-    - [2.pwn1\_sctf\_20161](#2pwn1_sctf_20161)
+    - [2.pwn1\_sctf\_20161(函数返回地址是ebp+4)](#2pwn1_sctf_20161函数返回地址是ebp4)
   - [RE](#re)
     - [1.\[GXYCTF2019\]luck\_guy1（字符串小端存储要倒过来）](#1gxyctf2019luck_guy1字符串小端存储要倒过来)
     - [2.Java逆向解密1](#2java逆向解密1)
@@ -123,14 +123,16 @@ else {
 - 即溢出v1到v2，0x30-0x05=44,至此完成payload![alt text](图片/QQ20250815-095420.png)
 - 注意：**小数要用地址表示，而不是直接输入**
 
-### 2.pwn1_sctf_20161
+### 2.pwn1_sctf_20161(函数返回地址是ebp+4)
 
 - 题目描述：无
 - 32位，小端，elf，无保护![alt text](图片/QQ20250818-170217.png)
 - ida打开，发现字符串flag![alt text](图片/QQ20250818-170546.png)
 - 查询到字符串在函数get_flag中![alt text](图片/QQ20250818-170717.png)
 - 那就是要调用到get_flag函数，因此需要覆盖返回地址为get_flag的地址![alt text](图片/QQ20250818-172220.png)
-- 
+- 分析代码，fget无法覆盖esp，但猜测下面代码功能应该是将I替换成you![alt text](图片/QQ20250819-173643.png)
+- 验证猜测![alt text](图片/QQ20250819-174450.png)
+- 因此构造payload![alt text](图片/QQ20250819-175629.png)
 
 ## RE
 
