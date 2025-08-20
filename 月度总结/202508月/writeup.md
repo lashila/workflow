@@ -2,7 +2,7 @@
 
 - [8月wp（WEB10+PWN5+RE5）](#8月wpweb10pwn5re5)
   - [WEB](#web)
-    - [1.\[极客大挑战 2019\]BabySQL1（尝试写了双写的sqlmap\_tamper，没有成功）](#1极客大挑战-2019babysql1尝试写了双写的sqlmap_tamper没有成功)
+    - [1.\[极客大挑战 2019\]BabySQL1](#1极客大挑战-2019babysql1)
     - [2.\[极客大挑战 2019\]PHP1（对php代码不熟悉，不知道反序列化要%00代表空格，和绕过wakeup）](#2极客大挑战-2019php1对php代码不熟悉不知道反序列化要00代表空格和绕过wakeup)
     - [3.\[ACTF2020 新生赛\]BackupFile1](#3actf2020-新生赛backupfile1)
     - [4.\[RoarCTF 2019\]Easy Calc1（不知道空格绕过waf，不熟悉php语句要添加分号才能运行）](#4roarctf-2019easy-calc1不知道空格绕过waf不熟悉php语句要添加分号才能运行)
@@ -11,14 +11,16 @@
   - [PWN](#pwn)
     - [1.ciscn\_2019\_n\_11（小数用地址表示）](#1ciscn_2019_n_11小数用地址表示)
     - [2.pwn1\_sctf\_20161(函数返回地址是ebp+4)](#2pwn1_sctf_20161函数返回地址是ebp4)
+    - [3.jarvisoj\_level01](#3jarvisoj_level01)
   - [RE](#re)
     - [1.\[GXYCTF2019\]luck\_guy1（字符串小端存储要倒过来）](#1gxyctf2019luck_guy1字符串小端存储要倒过来)
     - [2.Java逆向解密1](#2java逆向解密1)
+    - [3.\[BJDCTF2020\]JustRE1](#3bjdctf2020justre1)
 
 
 ## WEB
 
-### 1.[极客大挑战 2019]BabySQL1（尝试写了双写的sqlmap_tamper，没有成功）
+### 1.[极客大挑战 2019]BabySQL1
 
 - 第一次尝试万能密码，失败！![alt text](图片/QQ20250814-141530.png)
 - 尝试sqlmap，未能识别到注入点
@@ -134,6 +136,13 @@ else {
 - 验证猜测![alt text](图片/QQ20250819-174450.png)
 - 因此构造payload![alt text](图片/QQ20250819-175629.png)
 
+### 3.jarvisoj_level01
+
+- 题目描述：无
+- 64位，小端，elf，无保护![alt text](图片/QQ20250820-170813.png)
+- ida打开，发现字符串bin/bash和函数system![alt text](图片/QQ20250820-171039.png)
+- 因此构造payload![alt text](图片/QQ20250820-173536.png)
+
 ## RE
 
 ### 1.[GXYCTF2019]luck_guy1（字符串小端存储要倒过来）
@@ -151,3 +160,11 @@ else {
 - 题目描述：程序员小张不小心弄丢了加密文件用的秘钥，已知还好小张曾经编写了一个秘钥验证算法，聪明的你能帮小张找到秘钥吗？ 注意：得到的 flag 请包上 flag{} 提交
 - 根据题目描述，下载文件，发现是java文件，用jd-gui反编译，发现算法![alt text](图片/QQ20250818-164138.png)
 - 根据源码，编写python脚本，得到flag![alt text](图片/QQ20250818-165704.png)
+
+### 3.[BJDCTF2020]JustRE1
+
+- 题目描述：无
+- 32位，有保护但没看懂，百度也查询不到![alt text](图片/QQ20250820-085015.png)
+- ida打开，发现一个很奇怪的字符串![alt text](图片/QQ20250820-094246.png)
+- 标准字符串输出![alt text](图片/QQ20250820-094402.png)
+- 替换后得到flag
