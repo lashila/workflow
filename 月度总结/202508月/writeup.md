@@ -11,11 +11,13 @@
     - [7.\[BJDCTF2020\]Easy MD51（请求头响应头可能会出现提示信息，md5的sql注入，0e绕过，数组绕过）](#7bjdctf2020easy-md51请求头响应头可能会出现提示信息md5的sql注入0e绕过数组绕过)
     - [8.你传你🐎呢1](#8你传你呢1)
     - [9.\[护网杯 2018\]easy\_tornado1（tornado是python框架，通过ssti注入handler.settings可获得环境变量）](#9护网杯-2018easy_tornado1tornado是python框架通过ssti注入handlersettings可获得环境变量)
+    - [10.\[ZJCTF 2019\]NiZhuanSiWei1（php伪协议,数据封装流data://text/plain，base64编码php://filter/convert.base64-encode/resource=./useless.php）](#10zjctf-2019nizhuansiwei1php伪协议数据封装流datatextplainbase64编码phpfilterconvertbase64-encoderesourceuselessphp)
   - [PWN](#pwn)
     - [1.ciscn\_2019\_n\_11（小数用地址表示）](#1ciscn_2019_n_11小数用地址表示)
     - [2.pwn1\_sctf\_20161(函数返回地址是ebp+4)](#2pwn1_sctf_20161函数返回地址是ebp4)
     - [3.jarvisoj\_level01](#3jarvisoj_level01)
     - [4.\[第五空间2019 决赛\]PWN51（格式化输出printf添加%，可以把对应地址写到栈上，再去栈上的地址修改对应值）](#4第五空间2019-决赛pwn51格式化输出printf添加可以把对应地址写到栈上再去栈上的地址修改对应值)
+    - [5.jarvisoj\_level21](#5jarvisoj_level21)
   - [RE](#re)
     - [1.\[GXYCTF2019\]luck\_guy1（字符串小端存储要倒过来）](#1gxyctf2019luck_guy1字符串小端存储要倒过来)
     - [2.Java逆向解密1](#2java逆向解密1)
@@ -154,6 +156,20 @@ else {
 - 验证secret正确![alt text](图片/QQ20250830-214928.png)
 - 按算法加密得到flag![alt text](图片/QQ20250830-215437.png)
 
+
+### 10.[ZJCTF 2019]NiZhuanSiWei1（php伪协议,数据封装流data://text/plain，base64编码php://filter/convert.base64-encode/resource=./useless.php）
+
+- 题目描述：无
+- 打开网页，发现源代码提示![alt text](图片/QQ20250901-144914.png)
+- 有flag.php![alt text](图片/QQ20250901-153614.png)
+- 分析以后发现，要满足三个需求text内容包含welcome to the zjctf，file要展示useless.php，password要执行反序列化，所以要构造序列化数据
+- 第一个可以用php伪协议封装数据流text=data://text/plain,welcome%20to%20the%20zjctf![alt text](图片/QQ20250901-152212.png)
+- 第二个直接包含无有效显示，考虑base64编码后包含![alt text](图片/QQ20250901-152330.png)
+- file=php://filter/convert.base64-encode/resource=./useless.php![alt text](图片/QQ20250901-152717.png)
+- base64解码后，发现tostring方法，和上面的echo password对应![alt text](图片/QQ20250901-152958.png)
+- 因此直接构造payload password=O:4:"Flag":1:{s:4:"file";s:8:"flag.php";}![alt text](图片/QQ20250901-153814.png)
+- f12找到flag![alt text](图片/QQ20250901-153945.png)
+
 ## PWN
 
 ### 1.ciscn_2019_n_11（小数用地址表示）
@@ -201,6 +217,15 @@ else {
 - 现在需要确定read和printf之间栈上又偏移了多少，才能将值写入特定地址![alt text](图片/QQ20250823-151606.png)
 - 可以看到栈上第10个值![alt text](图片/QQ20250823-144953.png)
 - 因此构造payload，得到flag![alt text](图片/QQ20250823-152509.png)
+
+### 5.jarvisoj_level21
+
+- 题目描述：无
+- 32位，小端，elf，无保护![alt text](图片/QQ20250901-154655.png)
+- ida打开，发现read函数存在缓冲区溢出，左边函数列表存在system![alt text](图片/QQ20250901-161054.png)
+- 字符串存在bin/bash![alt text](图片/QQ20250901-161347.png)
+- 根据字符串大小构造payload![alt text](图片/QQ20250901-161806.png)
+- 得到flag![alt text](图片/QQ20250901-162005.png)
 
 ## RE
 
